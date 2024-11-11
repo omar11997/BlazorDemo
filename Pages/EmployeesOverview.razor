@@ -1,0 +1,70 @@
+﻿@page "/employeeoverview"
+
+
+<h3>EmployeesOverview</h3>
+@* <h3>@Name</h3> *@
+@if(Employees != null)
+{
+    
+<table class="table">
+    <tr>
+        <th>Employee Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Details</th>
+        <th>EDIT</th>
+    </tr>
+    @foreach (var emp in Employees)
+    {
+        <tr>
+            <td>@emp.Id</td>
+            <td>@emp.FirstName</td>
+            <td>@emp.LastName</td>
+            <td>
+                <a class="btn btn-primary" href="@($"EmployeeDetails/{emp.Id}")"> Details</a>
+            </td> 
+            <td>
+                    <a class="btn btn-primary" href="@($"editform/{emp.Id}")"> Edit</a>
+            </td>
+        </tr>
+    }
+    </table>
+}
+else
+{
+    <div>Loading.....</div>
+}
+
+
+
+
+@code {
+    /// <summary>
+    /// Props
+    /// </summary>
+    //public string Name { get; set; }
+    //List<Employee> Employees;
+    List<Country> Countries;
+    /// <summary>
+    /// Using HttpClient
+    /// </summary>
+    // [Inject]
+    // public HttpClient HttpClient { get; set; }
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     Name = "Omar";
+    //     Employees = await HttpClient.GetFromJsonAsync<List<Employee>>("https://localhost:7201/api/Employee");
+
+    // }
+    /// <summary>
+    /// Using HttpClientFactory
+    /// </summary>
+    IEnumerable<Employee> Employees;
+    [Inject]
+    public IEmployeeDataService EmployeeDataService { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        Employees =await EmployeeDataService.GetAll();
+    }
+
+}

@@ -1,0 +1,70 @@
+﻿@page "/editform/{id:int}"
+@page "/editform"
+
+<button onclick="@Nav">All Employee</button>
+
+@if (CurEmp != null && !Saved)
+{
+    <h3 class="card-title">EditForm for @CurEmp.FirstName @CurEmp.LastName</h3>
+    <EditForm Model="@CurEmp" OnValidSubmit="@HandelValidSubmit">
+
+
+        <ValidationSummary></ValidationSummary>
+        <div class="form-group row">
+            <label for="firstName" class="col-form-label">first Name</label>
+            <InputText id="firstName" class="form-control" @bind-Value="@CurEmp.FirstName"></InputText>
+            <ValidationMessage For="@(()=> CurEmp.FirstName)" />
+        </div>
+        <div class="form-group row">
+            <label for="lastName" class="col-form-label">last Name</label>
+            <InputText id="lastName" class="form-control" @bind-Value="@CurEmp.LastName"></InputText>
+
+        </div>
+        <div class="form-group row">
+            <label for="birthdate" class="col-form-label">Birthdate</label>
+            <InputDate id="BirthDate" class="form-control" @bind-Value="@CurEmp.BirthDate"></InputDate>
+
+        </div> <div class="form-group row">
+            <label for="email" class="col-form-label">email</label>
+            <InputText id="email" class="form-control" @bind-Value="@CurEmp.Email"></InputText>
+
+        </div>
+        <div class="form-group row">
+            <label for="country" class="col-form-label">country: </label>
+            <InputSelect id="country" class="form-control" @bind-Value="@CurEmp.CountryId">
+                @foreach (var country in Countries)
+                {
+                    <option value="@country.Id">@country.Name</option>
+                }
+
+            </InputSelect>
+
+        </div>
+        <div class="form-group row">
+            <label for="phoneNumber" class="col-form-label">phoneNumber</label>
+            <InputText id="phoneNumber" class="form-control" @bind-Value="@CurEmp.PhoneNumber"></InputText>
+
+        </div>
+        <div class="form-group row">
+            <label for="gender" class="col-form-label">gender</label>
+            <InputSelect id="gender" class="form-control" @bind-Value="@CurEmp.Gender">
+                <option value="@(Gender.Male)">Male</option>
+                <option value="@(Gender.Female)">Female</option>
+            </InputSelect>
+
+        </div>
+        <div class="form-group row">
+            <label for="comment" class="col-form-label">comment : </label>
+            <InputTextArea id="comment" class="form-control" @bind-Value="@CurEmp.Comment"></InputTextArea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+}
+else
+{
+    <div class="alert-success"> Employee Updated Successfully</div>
+}
+
+
+
+
